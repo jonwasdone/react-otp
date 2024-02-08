@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "clean": "rm -rf dist && echo 'Done.'",
+    "dev": "bun index.ts",
+    "lint": "eslint --ext .ts,.tsx .",
+    "build": "bun build --entrypoints ./index.ts --outdir ./dist --target browser"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/react": "^17.0.0",
