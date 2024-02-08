@@ -1,11 +1,17 @@
 {
-  "name": "react-otp",
+  "name": "@jonwasdone/react-otp",
+  "version": "1.0.0",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "react": "^16.8.0 || ^17 || ^18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonwasdone/react-otp"
   }
 }
