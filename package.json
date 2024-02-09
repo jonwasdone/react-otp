@@ -1,11 +1,11 @@
 {
   "name": "@jonwasdone/react-otp",
   "version": "1.0.0",
-  "module": "index.tsx",
+  "module": "src/index.tsx",
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist && echo 'Done.'",
-    "dev": "bun index.ts",
+    "dev": "bun index.tsx",
     "lint": "eslint --ext .ts,.tsx .",
     "build": "bun build --entrypoints ./index.tsx --outdir ./dist --target browser"
   },
@@ -15,7 +15,8 @@
     "eslint": "latest",
     "eslint-config-sheriff": "latest",
     "eslint-define-config": "latest",
-    "react": "^16.8.0 || ^17 || ^18"
+    "react": "^16.8.0 || ^17 || ^18",
+    "tailwindcss": "^3.4.1"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17 || ^18",
