@@ -1,18 +1,27 @@
 import { type KeyboardEvent, useState } from "react";
 
 interface OTPInputGroupProps {
-  onSubmit: (value: string) => void;
+  inputFieldsNumber?: number;
+  onSubmit?: (value: string) => void;
 }
 
-const OTPInputGroup = ({ onSubmit }: OTPInputGroupProps) => {
-  const [inputValues, setInputValues] = useState({
-    input1: "",
-    input2: "",
-    input3: "",
-    input4: "",
-    input5: "",
-    input6: "",
-  });
+const OTPInputGroup = ({
+  inputFieldsNumber = 4,
+  onSubmit,
+}: OTPInputGroupProps) => {
+  const defaultInputValues = Array.from(
+    { length: inputFieldsNumber },
+    (_, i) => i + 1,
+  ).reduce(
+    (acc, cur) => {
+      acc[`input${cur}`] = "";
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
+
+  const [inputValues, setInputValues] = useState(defaultInputValues);
+
   const handleInputChange = (inputId: string, value: string) => {
     setInputValues((prevInputValues) => ({
       ...prevInputValues,
@@ -22,7 +31,7 @@ const OTPInputGroup = ({ onSubmit }: OTPInputGroupProps) => {
 
   const handleSubmit = () => {
     const value = Object.values(inputValues).join("");
-    onSubmit(value);
+    onSubmit && onSubmit(value);
   };
 
   return (

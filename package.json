@@ -1,13 +1,13 @@
 {
   "name": "@jonwasdone/react-otp",
   "version": "1.0.0",
-  "module": "index.ts",
+  "module": "index.tsx",
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist && echo 'Done.'",
     "dev": "bun index.ts",
     "lint": "eslint --ext .ts,.tsx .",
-    "build": "bun build --entrypoints ./index.ts --outdir ./dist --target browser"
+    "build": "bun build --entrypoints ./index.tsx --outdir ./dist --target browser"
   },
   "devDependencies": {
     "@types/bun": "latest",
