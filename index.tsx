@@ -1,16 +1,28 @@
-import { type KeyboardEvent, useState } from "react";
+import { type KeyboardEvent, useState, Fragment } from "react";
 
 interface OTPInputGroupProps {
-  inputFieldsNumber?: number;
+  autoFocus?: boolean;
+  inputClassName?: string;
+  inputGroupClassName?: string;
+  style?: React.CSSProperties;
+  length?: number;
+  inputSeparatorRender?: (inputId?: number) => JSX.Element | undefined;
+  onChange?: (value: string) => void;
   onSubmit?: (value: string) => void;
 }
 
 const OTPInputGroup = ({
-  inputFieldsNumber = 4,
+  autoFocus = true,
+  inputClassName = "",
+  inputGroupClassName = "",
+  length = 4,
+  style = {},
+  inputSeparatorRender,
+  onChange,
   onSubmit,
 }: OTPInputGroupProps) => {
   const defaultInputValues = Array.from(
-    { length: inputFieldsNumber },
+    { length: length },
     (_, i) => i + 1,
   ).reduce(
     (acc, cur) => {
@@ -22,16 +34,20 @@ const OTPInputGroup = ({
 
   const [inputValues, setInputValues] = useState(defaultInputValues);
 
+  const parseInputValues = (inputValues: Record<string, string>) => {
+    return Object.values(inputValues).join("");
+  };
+
   const handleInputChange = (inputId: string, value: string) => {
     setInputValues((prevInputValues) => ({
       ...prevInputValues,
       [inputId]: value,
     }));
+    onChange && onChange(parseInputValues(inputValues));
   };
 
   const handleSubmit = () => {
-    const value = Object.values(inputValues).join("");
-    onSubmit && onSubmit(value);
+    onSubmit && onSubmit(parseInputValues(inputValues));
   };
 
   return (
@@ -39,58 +55,24 @@ const OTPInputGroup = ({
       <div
         id="OTPInputGroup"
         data-autosubmit="true"
-        className="flex items-center gap-4"
+        className={`flex items-center gap-4 ${inputGroupClassName}`}
       >
-        <OTPInput
-          id="input1"
-          value={inputValues.input1}
-          onValueChange={handleInputChange}
-          previousId={null}
-          handleSubmit={handleSubmit}
-          nextId="input2"
-          autoFocus
-        />
-        <OTPInput
-          id="input2"
-          value={inputValues.input2}
-          onValueChange={handleInputChange}
-          previousId="input1"
-          nextId="input3"
-          handleSubmit={handleSubmit}
-        />
-        <OTPInput
-          id="input3"
-          value={inputValues.input3}
-          onValueChange={handleInputChange}
-          previousId="input2"
-          nextId="input4"
-          handleSubmit={handleSubmit}
-        />
-        <span>&ndash;</span>
-        <OTPInput
-          id="input4"
-          value={inputValues.input4}
-          onValueChange={handleInputChange}
-          previousId="input3"
-          nextId="input5"
-          handleSubmit={handleSubmit}
-        />
-        <OTPInput
-          id="input5"
-          value={inputValues.input5}
-          onValueChange={handleInputChange}
-          previousId="input4"
-          nextId="input6"
-          handleSubmit={handleSubmit}
-        />
-        <OTPInput
-          id="input6"
-          value={inputValues.input6}
-          onValueChange={handleInputChange}
-          previousId="input5"
-          nextId={null}
-          handleSubmit={handleSubmit}
-        />
+        {Array.from({ length: length }, (_, i) => i + 1).map((i) => (
+          <Fragment key={i}>
+            <OTPInput
+              id={`input${i}`}
+              autoFocus={autoFocus && i === 1}
+              inputClassName={inputClassName}
+              style={style}
+              nextId={i === length ? null : `input${i + 1}`}
+              previousId={i === 1 ? null : `input${i - 1}`}
+              value={inputValues[`input${i}`]}
+              handleSubmit={handleSubmit}
+              onValueChange={handleInputChange}
+            />
+            {inputSeparatorRender && inputSeparatorRender(i)}
+          </Fragment>
+        ))}
       </div>
     </>
   );
@@ -98,22 +80,26 @@ const OTPInputGroup = ({
 
 interface OTPInputProps {
   id: string;
-  previousId: string | null;
-  nextId: string | null;
-  value: string;
-  onValueChange: (inputId: string, value: string) => void;
-  handleSubmit: () => void;
   autoFocus?: boolean;
+  inputClassName?: string;
+  style?: React.CSSProperties;
+  nextId: string | null;
+  previousId: string | null;
+  value: string;
+  handleSubmit: () => void;
+  onValueChange: (inputId: string, value: string) => void;
 }
 
 const OTPInput = ({
   id,
-  previousId,
-  nextId,
-  value,
-  onValueChange,
-  handleSubmit,
   autoFocus = false,
+  inputClassName,
+  style,
+  nextId,
+  previousId,
+  value,
+  handleSubmit,
+  onValueChange,
 }: OTPInputProps) => {
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key === "Backspace" || e.key === "ArrowLeft") {
@@ -140,14 +126,15 @@ const OTPInput = ({
   return (
     <input
       id={id}
-      name={id}
+      autoFocus={autoFocus}
+      className={`h-10 h-10 text-center border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${inputClassName}`}
       type="text"
-      value={value}
-      className="w-10 h-10 text-center border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       maxLength={1}
+      name={id}
+      style={style}
+      value={value}
       onChange={(e) => onValueChange(id, e.target.value)}
       onKeyUp={handleKeyUp}
-      autoFocus={autoFocus}
     />
   );
 };
