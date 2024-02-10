@@ -10,6 +10,8 @@
     "build": "bun build --entrypoints ./index.tsx --outdir ./dist --target browser"
   },
   "devDependencies": {
+    "@happy-dom/global-registrator": "^13.3.8",
+    "@testing-library/react": "^14.2.1",
     "@types/bun": "latest",
     "@types/react": "^17.0.0",
     "eslint": "latest",

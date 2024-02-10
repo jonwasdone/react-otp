@@ -1,4 +1,4 @@
-import { type KeyboardEvent, useState } from "react";
+import { type KeyboardEvent, useState, Fragment } from "react";
 
 interface OTPInputGroupProps {
   autoFocus?: boolean;
@@ -51,14 +51,14 @@ const OTPInputGroup = ({
   };
 
   return (
-    <>
+    <Fragment>
       <div
         id="OTPInputGroup"
         data-autosubmit="true"
         className={`flex items-center gap-4 ${inputGroupClassName}`}
       >
         {Array.from({ length: length }, (_, i) => i + 1).map((i) => (
-          <>
+          <Fragment key={`input${i}`}>
             <OTPInput
               id={`input${i}`}
               autoFocus={autoFocus && i === 1}
@@ -71,10 +71,10 @@ const OTPInputGroup = ({
               onValueChange={handleInputChange}
             />
             {inputSeparatorRender && inputSeparatorRender(i)}
-          </>
+          </Fragment>
         ))}
       </div>
-    </>
+    </Fragment>
   );
 };
 
