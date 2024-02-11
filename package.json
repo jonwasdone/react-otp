@@ -1,19 +1,23 @@
 {
   "name": "@jonwasdone/react-otp",
   "version": "1.0.0",
-  "module": "src/index.tsx",
+  "main": "dist/index.js",
+  "source": "src",
+  "module": "dist/index.js",
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist && echo 'Done.'",
     "dev": "bun index.tsx",
     "lint": "eslint --ext .ts,.tsx .",
-    "build": "bun build --entrypoints ./index.tsx --outdir ./dist --target browser"
+    "build": "rm -rf dist && bun run bun-build.ts",
+    "prepublishOnly": "bun run build"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "^13.3.8",
     "@testing-library/react": "^14.2.1",
     "@types/bun": "latest",
     "@types/react": "^17.0.0",
+    "bun-plugin-dts": "^0.2.1",
     "eslint": "latest",
     "eslint-config-sheriff": "latest",
     "eslint-define-config": "latest",

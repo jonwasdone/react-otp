@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import OTPInput from "./OTPInput";
 import "./index.css";
 

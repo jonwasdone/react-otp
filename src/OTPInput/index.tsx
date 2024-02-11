@@ -1,4 +1,4 @@
-import { type KeyboardEvent } from "react";
+import React, { type KeyboardEvent } from "react";
 
 interface OTPInputProps {
   id: string;
