@@ -9,18 +9,21 @@
     "clean": "rm -rf dist && echo 'Done.'",
     "dev": "bun index.tsx",
     "lint": "eslint --ext .ts,.tsx .",
-    "build": "rm -rf dist && bun run bun-build.ts",
-    "prepublishOnly": "bun run build"
+    "build": "rm -rf dist && bun run bun-build.ts && bun run tailwind-build",
+    "prepublishOnly": "bun run build",
+    "tailwind-build": "tailwindcss -i ./src/index.css -o ./dist/index.css --minify"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "^13.3.8",
     "@testing-library/react": "^14.2.1",
     "@types/bun": "latest",
     "@types/react": "^17.0.0",
+    "autoprefixer": "^10.4.17",
     "bun-plugin-dts": "^0.2.1",
     "eslint": "latest",
     "eslint-config-sheriff": "latest",
     "eslint-define-config": "latest",
+    "postcss": "^8.4.35",
     "react": "^16.8.0 || ^17 || ^18",
     "tailwindcss": "^3.4.1"
   },
