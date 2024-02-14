@@ -10,8 +10,8 @@ test("renders opt input field", () => {
       nextId="input2"
       previousId={null}
       value=""
-      onValueChange={() => {}}
-      handleSubmit={() => {}}
+      onValueChange={() => { }}
+      handleSubmit={() => { }}
     />,
   );
 

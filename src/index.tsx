@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import OTPInput from "./OTPInput";
+import { parseInputValues } from "./utils";
 
 interface OTPInputGroupProps {
   autoFocus?: boolean;
@@ -35,10 +36,6 @@ const OTPInputGroup = ({
 
   const [inputValues, setInputValues] = useState(defaultInputIdValues);
 
-  const parseInputValues = (inputValues: Record<string, string>) => {
-    return Object.values(inputValues).join("");
-  };
-
   const handleInputChange = (inputId: string, value: string) => {
     setInputValues((prevInputValues) => ({
       ...prevInputValues,
@@ -72,7 +69,7 @@ const OTPInputGroup = ({
               handleSubmit={handleSubmit}
               onValueChange={handleInputChange}
             />
-            {inputSeparatorRender && inputSeparatorRender(i)}
+            {inputSeparatorRender && i !== length && inputSeparatorRender(i)}
           </Fragment>
         ))}
       </div>
