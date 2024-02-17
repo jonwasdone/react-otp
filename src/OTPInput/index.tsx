@@ -10,6 +10,7 @@ interface OTPInputProps {
   value: string;
   handleSubmit: () => void;
   onValueChange: (inputId: string, value: string) => void;
+  onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => void;
 }
 
 export default function OTPInput({
@@ -22,6 +23,7 @@ export default function OTPInput({
   value,
   handleSubmit,
   onValueChange,
+  onPaste,
 }: OTPInputProps) {
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key === "Backspace" || e.key === "ArrowLeft") {
@@ -45,6 +47,7 @@ export default function OTPInput({
       }
     }
   };
+
   return (
     <input
       id={id}
@@ -56,6 +59,7 @@ export default function OTPInput({
       name={id}
       style={style}
       value={value}
+      onPaste={onPaste}
       onChange={(e) => onValueChange(id, e.target.value)}
       onKeyUp={handleKeyUp}
     />

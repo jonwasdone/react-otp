@@ -52,6 +52,22 @@ test("left arrow focuses previous input", () => {
   expect(document.activeElement).toBe(input2);
 });
 
+test("left arrow does not focus previous input if value is empty", () => {
+  const wrapper = render(<OTPInputGroup />);
+  const input1 = wrapper.getByTestId("input1");
+  input1.focus();
+  fireEvent.keyUp(input1, { key: "ArrowLeft" });
+  expect(document.activeElement).toBe(input1);
+});
+
+test("backspace does not focus previous input if value is empty", () => {
+  const wrapper = render(<OTPInputGroup />);
+  const input1 = wrapper.getByTestId("input1");
+  input1.focus();
+  fireEvent.keyUp(input1, { key: "Backspace" });
+  expect(document.activeElement).toBe(input1);
+});
+
 test("backspace focuses previous input", () => {
   const wrapper = render(<OTPInputGroup />);
   const input1 = wrapper.getByTestId("input1");
