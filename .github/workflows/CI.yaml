@@ -23,12 +23,13 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: (coverage) Test
-        run: c8 --include=src bun test --coverage
+        run: bun test --coverage
 
-      - name: (coverage) Report
+      - name: Upload coverage reports to Codecov
         run: |
-          c8 report --reporter=text-lcov > coverage.lcov
-          bash <(curl -s https://codecov.io/bash)
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN}
 
   build:
     runs-on: ubuntu-latest
