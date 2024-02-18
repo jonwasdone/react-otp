@@ -1,5 +1,0 @@
-- name: Upload coverage reports to Codecov
-  uses: codecov/codecov-action@v4.0.1
-  env:
-    token: aa334b1d-3c09-4e56-944c-ec1c1fd58376
-    slug: jonwasdone/react-otp
