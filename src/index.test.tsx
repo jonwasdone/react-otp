@@ -24,6 +24,36 @@ test("renders OTPInputGroup with custom inputClassName", () => {
   expect(otpInput?.classList.contains("custom-input")).toBe(true);
 });
 
+test("renders OTPInputGroup with defaultValue", () => {
+  const wrapper = render(<OTPInputGroup defaultValue="1234" />);
+  const input1 = wrapper.getByTestId("input1") as HTMLInputElement;
+  const input2 = wrapper.getByTestId("input2") as HTMLInputElement;
+  const input3 = wrapper.getByTestId("input3") as HTMLInputElement;
+  const input4 = wrapper.getByTestId("input4") as HTMLInputElement;
+  expect(input1.value).toBe("1");
+  expect(input2.value).toBe("2");
+  expect(input3.value).toBe("3");
+  expect(input4.value).toBe("4");
+});
+
+test("renders OTPInputGroup with custom style", () => {
+  const wrapper = render(<OTPInputGroup style={{ color: "red" }} />);
+  const otpInput = wrapper.getByTestId("input1");
+  expect(otpInput?.style.color).toBe("red");
+});
+
+test("renders OTPInputGroup with controlled value", () => {
+  const wrapper = render(<OTPInputGroup value="1234" />);
+  const input1 = wrapper.getByTestId("input1") as HTMLInputElement;
+  const input2 = wrapper.getByTestId("input2") as HTMLInputElement;
+  const input3 = wrapper.getByTestId("input3") as HTMLInputElement;
+  const input4 = wrapper.getByTestId("input4") as HTMLInputElement;
+  expect(input1.value).toBe("1");
+  expect(input2.value).toBe("2");
+  expect(input3.value).toBe("3");
+  expect(input4.value).toBe("4");
+});
+
 test("right arrow does not focus next input if value is empty", () => {
   const wrapper = render(<OTPInputGroup />);
   const input1 = wrapper.getByTestId("input1");
@@ -103,5 +133,17 @@ test("onSubmit is called when last input value is entered", () => {
   const lastInput = wrapper.getByTestId("input6");
   lastInput.focus();
   fireEvent.keyUp(lastInput, { key: "100" });
+  expect(onSubmit).toHaveBeenCalled();
+});
+
+test("onPaste is called when input value is pasted", () => {
+  const onPaste = mock(() => { });
+  const onSubmit = mock(() => { });
+  const wrapper = render(
+    <OTPInputGroup onSubmit={onSubmit} onPaste={onPaste} />,
+  );
+  const input1 = wrapper.getByTestId("input1");
+  fireEvent.paste(input1, { clipboardData: { getData: () => "1234" } });
+  expect(onPaste).toHaveBeenCalled();
   expect(onSubmit).toHaveBeenCalled();
 });

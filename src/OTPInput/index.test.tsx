@@ -12,6 +12,7 @@ test("renders opt input field", () => {
       value=""
       onValueChange={() => { }}
       handleSubmit={() => { }}
+      onPaste={() => { }}
     />,
   );
 

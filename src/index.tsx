@@ -1,6 +1,6 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import OTPInput from "./OTPInput";
-import { parseInputValues } from "./utils";
+import { parseIdValuesToText, parseTextToIdValues } from "./utils";
 
 interface OTPInputGroupProps {
   autoFocus?: boolean;
@@ -29,33 +29,25 @@ const OTPInputGroup = ({
   onSubmit,
   onPaste,
 }: OTPInputGroupProps) => {
-  const defaultInputIdValues = Array.from(
-    { length: length },
-    (_, i) => i + 1,
-  ).reduce(
-    (acc, cur) => {
-      acc[`input${cur}`] = defaultValue[cur - 1] || "";
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
+  const defaultInputIdValues = parseTextToIdValues(defaultValue, length);
 
   const [inputValues, setInputValues] = useState(defaultInputIdValues);
 
   const handleInputChange = (inputId: string, value: string) => {
-    setInputValues((prevInputValues) => ({
-      ...prevInputValues,
-      [inputId]: value,
-    }));
-    onChange && onChange(parseInputValues(inputValues));
+    setInputValues((prevInputValues) => {
+      const newInputValues = { ...prevInputValues, [inputId]: value };
+      onChange && onChange(parseIdValuesToText(newInputValues));
+      return newInputValues;
+    });
   };
 
   const handleSubmit = () => {
-    onSubmit && onSubmit(parseInputValues(inputValues));
+    onSubmit && onSubmit(parseIdValuesToText(inputValues));
   };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
+
     const pastedData = e.clipboardData.getData("text/plain").split("");
     setInputValues((prevInputValues) => {
       const newInputValues = { ...prevInputValues };
@@ -64,14 +56,21 @@ const OTPInputGroup = ({
       }
       return newInputValues;
     });
+
     onPaste && onPaste(e);
+    onSubmit && onSubmit(e.clipboardData.getData("text/plain"));
   };
+
+  useEffect(() => {
+    if (value && value.length === length) {
+      setInputValues(parseTextToIdValues(value, length));
+    }
+  }, [value, length]);
 
   return (
     <Fragment>
       <div
         id="OTPInputGroup"
-        data-autosubmit="true"
         className={`flex items-center gap-4 ${inputGroupClassName}`}
         data-testid="OTPInputGroup"
       >

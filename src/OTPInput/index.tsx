@@ -25,26 +25,32 @@ export default function OTPInput({
   onValueChange,
   onPaste,
 }: OTPInputProps) {
+  const handleRightMove = () => {
+    if (nextId !== null) {
+      const next = document.getElementById(nextId);
+      if (value) next?.focus();
+    } else {
+      handleSubmit();
+    }
+  };
+
+  const handleLeftMove = () => {
+    if (previousId !== null) {
+      const prev = document.getElementById(previousId);
+      prev?.focus();
+    }
+  };
+
   const handleKeyUp = (e: KeyboardEvent) => {
-    if (e.key === "Backspace" || e.key === "ArrowLeft") {
-      if (previousId !== null) {
-        const prev = document.getElementById(previousId);
-        if (prev) prev.focus();
-      }
-    } else if (
-      (e.key >= "0" && e.key <= "57") || //check if key is numeric keys 0 to 9
-      (e.key >= "96" && e.key <= "105") || //check if key is numeric keypad keys 0 to 9
-      e.key === "ArrowRight" //check if key is right arrow key
-    ) {
-      if (nextId !== null) {
-        const next = document.getElementById(nextId);
-        if (value) next?.focus();
-      } else {
-        const inputGroup = document.getElementById("OTPInputGroup");
-        if (inputGroup && inputGroup.dataset["autosubmit"]) {
-          handleSubmit();
-        }
-      }
+    if (e.key === "Backspace" || e.key === "ArrowLeft") handleLeftMove();
+
+    if ((e.key >= "0" && e.key <= "9") || e.key === "ArrowRight")
+      handleRightMove();
+
+    if (e.key === "Enter") handleSubmit();
+
+    if (e.key >= "0" && e.key <= "9") {
+      onValueChange(id, e.key);
     }
   };
 
