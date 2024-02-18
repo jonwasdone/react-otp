@@ -64,7 +64,6 @@ export default function OTPInput({
       data-testid={id}
       type="text"
       maxLength={1}
-      name={id}
       style={style}
       value={value}
       onPaste={onPaste}
