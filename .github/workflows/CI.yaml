@@ -16,20 +16,16 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/package.json') }}
 
-      - name: (coverage) Install
-        run: npm install -g c8
-
       - name: Install
         run: bun install --frozen-lockfile
 
       - name: (coverage) Test
         run: bun test --coverage
 
-      - name: Upload coverage reports to Codecov
+      - name: (coverage) Report
         run: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
-          chmod +x codecov
-          ./codecov -t ${CODECOV_TOKEN}
+          bun test --coverage --reporter=text-lcov > coverage.lcov
+          bash <(curl -s https://codecov.io/bash)
 
   build:
     runs-on: ubuntu-latest
