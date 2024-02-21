@@ -31,6 +31,8 @@ export default function OTPInput({
       if (value) next?.focus();
     } else {
       handleSubmit();
+      const current = document.getElementById(id);
+      current?.blur();
     }
   };
 
