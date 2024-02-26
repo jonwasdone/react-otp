@@ -1,4 +1,4 @@
-[![Static Badge](https://img.shields.io/badge/coverage-100%-green)](https://github.com/jonwasdone/react-otp)
+[![Static Badge](https://img.shields.io/badge/coverage-100-green)](https://github.com/jonwasdone/react-otp)
 [![Static Badge](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/jonwasdone/react-otp/blob/main/LICENSE)
 
 # React OTP Input
