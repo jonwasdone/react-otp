@@ -63,7 +63,7 @@ export default function OTPInput({
       id={id}
       autoFocus={autoFocus}
       type={type}
-      className={`w-10 h-10 text-center border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${inputClassName}`}
+      className={`remove-arrow w-10 h-10 text-center border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${inputClassName}`}
       data-testid={id}
       maxLength={1}
       name={id}
