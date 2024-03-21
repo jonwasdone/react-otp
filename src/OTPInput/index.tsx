@@ -8,6 +8,7 @@ interface OTPInputProps {
   nextId: string | null;
   previousId: string | null;
   value: string;
+  type?: "text" | "number";
   handleSubmit: () => void;
   onValueChange: (inputId: string, value: string) => void;
   onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => void;
@@ -21,6 +22,7 @@ export default function OTPInput({
   nextId,
   previousId,
   value,
+  type,
   handleSubmit,
   onValueChange,
   onPaste,
@@ -60,9 +62,9 @@ export default function OTPInput({
     <input
       id={id}
       autoFocus={autoFocus}
+      type={type}
       className={`w-10 h-10 text-center border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${inputClassName}`}
       data-testid={id}
-      type="text"
       maxLength={1}
       name={id}
       style={style}
