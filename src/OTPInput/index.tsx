@@ -9,6 +9,7 @@ interface OTPInputProps {
   previousId: string | null;
   value: string;
   type?: "text" | "number";
+  inputMode?: "numeric" | "text";
   handleSubmit: () => void;
   onValueChange: (inputId: string, value: string) => void;
   onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => void;
@@ -23,6 +24,7 @@ export default function OTPInput({
   previousId,
   value,
   type,
+  inputMode,
   handleSubmit,
   onValueChange,
   onPaste,
@@ -65,6 +67,7 @@ export default function OTPInput({
       type={type}
       className={`remove-arrow w-10 h-10 text-center border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${inputClassName}`}
       data-testid={id}
+      inputMode={inputMode}
       maxLength={1}
       name={id}
       style={style}

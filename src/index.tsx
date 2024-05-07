@@ -11,6 +11,7 @@ interface OTPInputGroupProps {
   style?: React.CSSProperties;
   length?: number;
   type?: "text" | "number";
+  inputMode?: "numeric" | "text";
   inputSeparatorRender?: (inputId?: number) => JSX.Element | undefined;
   onChange?: (value: string) => void;
   onSubmit?: (value: string) => void;
@@ -26,6 +27,7 @@ const OTPInputGroup = ({
   length = 4,
   style = {},
   type = "text",
+  inputMode = "text",
   inputSeparatorRender,
   onChange,
   onSubmit,
@@ -82,6 +84,7 @@ const OTPInputGroup = ({
               id={`input${i}`}
               autoFocus={autoFocus && i === 1}
               type={type}
+              inputMode={inputMode}
               inputClassName={inputClassName}
               style={style}
               nextId={i === length ? null : `input${i + 1}`}
